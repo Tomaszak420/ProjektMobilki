@@ -11,6 +11,7 @@
     <!-- Lokalizacja - Szerokość geograficzna i długość geograficzna -->
 
     <!-- MapView -->
+
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="363dp"
@@ -32,64 +33,229 @@
     <!-- Przycisk odświeżania -->
 
     <TextView
-        android:id="@+id/Pogoda"
+        android:id="@+id/stefatext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="65dp"
         android:gravity="center"
-        android:text="Aktualna pogoda: Ładowanie..."
+        android:text="Twoja Stefa czasowa: "
         android:textColor="#FBFBFB"
-        android:textSize="30sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+    <TextView
+        android:id="@+id/wybranatext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Wybrana Stefa czasowa: "
+        android:textColor="#FBFBFB"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+    <TextView
+        android:id="@+id/StrefaCzasowaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Strefa Czasowa"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="@+id/stefatext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stefatext" />
+
+    <TextView
+        android:id="@+id/strefaCzasowaLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Strefa Czasowa"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/wybranatext"
+        app:layout_constraintTop_toBottomOf="@+id/wybranatext" />
+
+    <TextView
+        android:id="@+id/StrefaCzasowaData"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="@+id/StrefaCzasowaLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/StrefaCzasowaLabel" />
+
+    <TextView
+        android:id="@+id/strefaCzasowaData2"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="52dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/strefaCzasowaLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/strefaCzasowaLabel2" />
+
+    <TextView
+        android:id="@+id/PrzesuniecieUTCData"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="@+id/UTCLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UTCLabel" />
+
+    <TextView
+        android:id="@+id/przesuniecieUTCData2"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="42dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/UTCLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/UTCLabel2" />
+
+    <TextView
+        android:id="@+id/GodzinaData"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="@+id/UTCLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GodzinaLabel" />
+
+    <TextView
+        android:id="@+id/godzinaData2"
+        android:layout_width="110dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="47dp"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/przesuniecieUTCData2"
+        app:layout_constraintTop_toBottomOf="@+id/godzinaLabel2" />
+
+    <TextView
+        android:id="@+id/UTCLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Przesunięcie UTC"
+        android:textColor="#FBFBFB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/StrefaCzasowaData" />
+
+    <TextView
+        android:id="@+id/UTCLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="42dp"
+        android:text="Przesunięcie UTC"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/strefaCzasowaData2"
+        app:layout_constraintTop_toBottomOf="@+id/strefaCzasowaData2" />
+
+    <TextView
+        android:id="@+id/GodzinaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Godzina"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="@+id/PrzesuniecieUTCData"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrzesuniecieUTCData" />
+
+    <TextView
+        android:id="@+id/godzinaLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="47dp"
+        android:text="Godzina"
+        android:textColor="#FBFBFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/przesuniecieUTCData2"
+        app:layout_constraintTop_toBottomOf="@+id/przesuniecieUTCData2" />
+
+    <TextView
+        android:id="@+id/PodajMiastoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="135dp"
+        android:text="Podaj wybrane miasto "
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
 
     <TextView
-        android:id="@+id/Opis"
+        android:id="@+id/LocationMapLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="67dp"
-        android:gravity="center"
-        android:text="Opis pogody: Ładowanie..."
-        android:textColor="#FBFBFB"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Pogoda" />
-
-    <TextView
-        android:id="@+id/Forecast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="67dp"
-        android:gravity="center"
-        android:text="Prognoza Pogody"
-        android:textColor="#FBFBFB"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Pogoda" />
-
-    <GridLayout
-        android:id="@+id/forecastContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="134dp"
         android:layout_marginTop="32dp"
-        android:columnCount="3"
+        android:layout_marginEnd="135dp"
+        android:text="Lokalizacja wybranego miasta"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SzukajButton" />
 
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/CityInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="101dp"
+        android:background="#FFFFFF"
+
+
+        android:ems="10"
+        android:hint="Warsaw"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Forecast" />
+        app:layout_constraintTop_toBottomOf="@+id/PodajMiastoLabel" />
+
+    <Button
+        android:id="@+id/SzukajButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="160dp"
+        android:text="Szukaj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CityInput" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
