@@ -1,30 +1,38 @@
 package com.example.projektmobilki
-import android.location.Geocoder
+
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.Locale
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var locationManager: LocationManager
     private lateinit var locationTextView: TextView
-
-
+    private lateinit var StrefaCzasowaData: TextView
+    private lateinit var PrzesuniecieUTCData: TextView
+    private lateinit var GodzinaData: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         locationTextView = findViewById(R.id.locationTextView)
-
-
+        StrefaCzasowaData = findViewById(R.id.StrefaCzasowaData)
+        PrzesuniecieUTCData = findViewById(R.id.PrzesuniecieUTCData)
+        GodzinaData = findViewById(R.id.GodzinaData)
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -40,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         try {
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                1000L, // Minimalny czas między aktualizacjami (ms)
-                1f // Minimalna odległość między aktualizacjami (metry)
+                1000L,
+                1f
             ) { location ->
                 updateLocationText(location)
             }
@@ -55,8 +63,7 @@ class MainActivity : AppCompatActivity() {
             val latitude = it.latitude
             val longitude = it.longitude
             getLocationName(latitude, longitude)
-
-
+            fetchIPGeolocationData(latitude, longitude)
         }
     }
 
@@ -76,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
             if (addressList != null && addressList.isNotEmpty()) {
                 val address = addressList[0]
-                val locationName = address.getAddressLine(0) // pełna nazwa lokalizacji
+                val locationName = address.getAddressLine(0)
 
                 runOnUiThread {
                     locationTextView.text = "Lokalizacja: $locationName"
@@ -94,7 +101,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchIPGeolocationData(latitude: Double, longitude: Double) {
+        thread {
+            try {
+                // Ustaw swój klucz API
+                val apiKey = "5da52d7151834ecbba079aa4ab4d836b"
+                val url = URL("https://api.ipgeolocation.io/timezone?apiKey=$apiKey&lat=$latitude&long=$longitude")
+                                    //'https://api.ipgeolocation.io/timezone?apiKey=API_KEY&tz=America/Los_Angeles'
+                                    //https://ipgeolocation.io/timezone-api.html?state=TimeZone#documentation-overview
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
 
+                val responseCode = connection.responseCode
+                if (responseCode == 200) {
+                    val response = connection.inputStream.bufferedReader().readText()
+                    val jsonObject = JSONObject(response)
 
+                    // Pobieranie danych
+
+                    val timezone = jsonObject.getString("timezone")
+                    Log.d("kod",timezone)
+
+                    val utcOffset = jsonObject.getString("timezone_offset")
+                    Log.d("kod",utcOffset)
+                    val currentTime = jsonObject.getString("time_24")
+                    Log.d("kod",currentTime)
+
+                    // Aktualizuj UI
+                    runOnUiThread {
+                        StrefaCzasowaData.text = " $timezone"
+                        PrzesuniecieUTCData.text = "$utcOffset"
+                        GodzinaData.text = "$currentTime"
+
+                    }
+                } else {
+                    runOnUiThread {
+                        StrefaCzasowaData.text = "Błąd API: $responseCode"
+                    }
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    StrefaCzasowaData.text = "Błąd podczas połączenia z API"
+                }
+            }
+        }
+    }
 
 }
