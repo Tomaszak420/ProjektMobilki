@@ -6,5 +6,7 @@
     <string name="time_label">Godzina:</string>
     <string name="address_prompt_label">Podaj adres miasta:</string>
     <string name="search_button">Szukaj</string>
-    <string name="map_button">Zobacz na mapie</string>
+    <string name="map_button">Zobacz lokalizację na mapie</string>
+    <string name="button_search_activity">Wyszukaj inną lokalizację</string>
+    <string name="button_map_activity">Zobacz lokalizację na mapie</string>
 </resources>

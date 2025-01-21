@@ -29,12 +29,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var StrefaCzasowaData: TextView
     private lateinit var PrzesuniecieUTCData: TextView
     private lateinit var GodzinaData: TextView
-    private lateinit var LookupTimezone: TextView
-    private lateinit var LookupUTCData: TextView
-    private lateinit var LookupDateTime: TextView
-    private lateinit var AddressInput: EditText
-    private lateinit var SearchButton: Button
+
     private lateinit var GoSearchButton: Button
+    private lateinit var GoMapButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +42,8 @@ class MainActivity : AppCompatActivity() {
         PrzesuniecieUTCData = findViewById(R.id.PrzesuniecieUTCData)
         GodzinaData = findViewById(R.id.GodzinaData)
 
-        LookupTimezone = findViewById(R.id.lookup_timezone_display)
-        LookupUTCData = findViewById(R.id.lookup_UTC_display)
-        LookupDateTime = findViewById(R.id.lookup_date_time_display)
-
-        AddressInput = findViewById(R.id.address_input)
-        SearchButton = findViewById(R.id.address_button)
-        GoSearchButton = findViewById(R.id.button)
+        GoSearchButton = findViewById(R.id.button_search_activity)
+        GoMapButton = findViewById(R.id.button_map_activity)
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -62,25 +54,16 @@ class MainActivity : AppCompatActivity() {
             getLocation()
         }
 
-        SearchButton.setOnClickListener {
-            val input = AddressInput.text.toString()
-            val address = getAddressFromString(input)
-
-            if (address != null) {
-                val timeData = getIPGeolocationData(address.latitude, address.longitude)
-                updateSearchedLocationUI(address.getAddressLine(0), timeData)
-            }
-            else {
-                locationTextView.text = "Nie udało się pobrać danych lokalizacji."
-            }
-        }
-
         GoSearchButton.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
-    }
 
+        GoMapButton.setOnClickListener {
+            //Do zaimplementowania
+        }
+    }
+    /*
     private fun updateSearchedLocationUI(addressLine: String, timeData: Array<String>) {
         locationTextView.text = addressLine
         if (timeData.size == 3) {
@@ -88,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             LookupUTCData.text = timeData[1]
             LookupDateTime.text = timeData[2]
         }
-    }
+    }*/
 
     private fun getLocation() {
         try {
@@ -167,36 +150,36 @@ class MainActivity : AppCompatActivity() {
         var utcOffset: String = ""
         var currentTime: String = ""
 
-            try {
-                // Ustaw swój klucz API
-                val apiKey = "5da52d7151834ecbba079aa4ab4d836b"
-                val url =
-                    URL("https://api.ipgeolocation.io/timezone?apiKey=$apiKey&lat=$latitude&long=$longitude")
-                //'https://api.ipgeolocation.io/timezone?apiKey=API_KEY&tz=America/Los_Angeles'
-                //https://ipgeolocation.io/timezone-api.html?state=TimeZone#documentation-overview
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
+        try {
+            // Ustaw swój klucz API
+            val apiKey = "5da52d7151834ecbba079aa4ab4d836b"
+            val url =
+                URL("https://api.ipgeolocation.io/timezone?apiKey=$apiKey&lat=$latitude&long=$longitude")
+            //'https://api.ipgeolocation.io/timezone?apiKey=API_KEY&tz=America/Los_Angeles'
+            //https://ipgeolocation.io/timezone-api.html?state=TimeZone#documentation-overview
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
 
-                val responseCode = connection.responseCode
-                if (responseCode == 200) {
-                    val response = connection.inputStream.bufferedReader().readText()
-                    val jsonObject = JSONObject(response)
+            val responseCode = connection.responseCode
+            if (responseCode == 200) {
+                val response = connection.inputStream.bufferedReader().readText()
+                val jsonObject = JSONObject(response)
 
-                    // Pobieranie danych
-                    timezone = jsonObject.getString("timezone")
-                    utcOffset = jsonObject.getString("timezone_offset")
-                    currentTime = jsonObject.getString("time_24")
+                // Pobieranie danych
+                timezone = jsonObject.getString("timezone")
+                utcOffset = jsonObject.getString("timezone_offset")
+                currentTime = jsonObject.getString("time_24")
 
-                    Log.d("kod",timezone)
-                    Log.d("kod",utcOffset)
-                    Log.d("kod",currentTime)
-                } else {
-                    // Jesli cos sie z API wykrzaczy
-                }
-                connection.disconnect()
-            } catch (e: Exception) {
-                e.printStackTrace()
+                Log.d("kod",timezone)
+                Log.d("kod",utcOffset)
+                Log.d("kod",currentTime)
+            } else {
+                // Jesli cos sie z API wykrzaczy
             }
+            connection.disconnect()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
 
         return arrayOf(timezone, utcOffset, currentTime)
