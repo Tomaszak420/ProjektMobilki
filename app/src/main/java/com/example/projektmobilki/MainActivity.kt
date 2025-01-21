@@ -63,15 +63,6 @@ class MainActivity : AppCompatActivity() {
             //Do zaimplementowania
         }
     }
-    /*
-    private fun updateSearchedLocationUI(addressLine: String, timeData: Array<String>) {
-        locationTextView.text = addressLine
-        if (timeData.size == 3) {
-            LookupTimezone.text = timeData[0]
-            LookupUTCData.text = timeData[1]
-            LookupDateTime.text = timeData[2]
-        }
-    }*/
 
     private fun getLocation() {
         try {
@@ -105,20 +96,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAddressFromString(addressString: String) : Address? {
-        try {
-            val geocoder = Geocoder(this)
-            val addressList = geocoder.getFromLocationName(addressString, 1);
-
-            if (!addressList.isNullOrEmpty()) {
-                val address = addressList[0]
-                return address
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
 
     private fun getLocationName(latitude: Double, longitude: Double) {
         try {
@@ -145,45 +122,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getIPGeolocationData(latitude: Double, longitude: Double) : Array<String> {
-        var timezone: String = ""
-        var utcOffset: String = ""
-        var currentTime: String = ""
-
-        try {
-            // Ustaw swój klucz API
-            val apiKey = "5da52d7151834ecbba079aa4ab4d836b"
-            val url =
-                URL("https://api.ipgeolocation.io/timezone?apiKey=$apiKey&lat=$latitude&long=$longitude")
-            //'https://api.ipgeolocation.io/timezone?apiKey=API_KEY&tz=America/Los_Angeles'
-            //https://ipgeolocation.io/timezone-api.html?state=TimeZone#documentation-overview
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-
-            val responseCode = connection.responseCode
-            if (responseCode == 200) {
-                val response = connection.inputStream.bufferedReader().readText()
-                val jsonObject = JSONObject(response)
-
-                // Pobieranie danych
-                timezone = jsonObject.getString("timezone")
-                utcOffset = jsonObject.getString("timezone_offset")
-                currentTime = jsonObject.getString("time_24")
-
-                Log.d("kod",timezone)
-                Log.d("kod",utcOffset)
-                Log.d("kod",currentTime)
-            } else {
-                // Jesli cos sie z API wykrzaczy
-            }
-            connection.disconnect()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-
-        return arrayOf(timezone, utcOffset, currentTime)
-    }
 
     private fun fetchIPGeolocationData(latitude: Double, longitude: Double) {
         val zmienna: String
@@ -213,9 +151,9 @@ class MainActivity : AppCompatActivity() {
 
                     // Aktualizuj UI
                     runOnUiThread {
-                        StrefaCzasowaData.text = " $timezone"
-                        PrzesuniecieUTCData.text = "$utcOffset"
-                        GodzinaData.text = "$currentTime"
+                        StrefaCzasowaData.text = timezone
+                        PrzesuniecieUTCData.text = utcOffset
+                        GodzinaData.text = currentTime
 
                     }
                 } else {

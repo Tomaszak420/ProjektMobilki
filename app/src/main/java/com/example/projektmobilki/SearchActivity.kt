@@ -25,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var longitudeInput : EditText
     private lateinit var latitudeInput : EditText
     private lateinit var addressInput : EditText
+    private lateinit var goMapButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +39,9 @@ class SearchActivity : AppCompatActivity() {
         // Buttons
         searchAddressButton = findViewById(R.id.search_address_button)
         searchCoordinatesButton = findViewById(R.id.search_coordinates_button)
+        goMapButton = findViewById(R.id.button_go_map)
         // Input fields
-        addressInput = findViewById(R.id.search_address_input)
+        addressInput = findViewById(R.id.address_input)
         longitudeInput = findViewById(R.id.longitude_input)
         latitudeInput = findViewById(R.id.latitude_input)
 
@@ -79,7 +81,9 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-
+        goMapButton.setOnClickListener {
+            // Do zaimplementowania
+        }
 
     }
 
