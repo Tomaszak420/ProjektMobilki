@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/StrefaCzasowaLabel" />
 
     <TextView
-        android:id="@+id/strefaCzasowaData2"
+        android:id="@+id/lookup_timezone_display"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/UTCLabel" />
 
     <TextView
-        android:id="@+id/przesuniecieUTCData2"
+        android:id="@+id/lookup_UTC_display"
         android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -147,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@+id/GodzinaLabel" />
 
     <TextView
-        android:id="@+id/godzinaData2"
+        android:id="@+id/lookup_date_time_display"
         android:layout_width="110dp"
         android:layout_height="19dp"
         android:layout_marginTop="8dp"
@@ -155,7 +155,7 @@
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/przesuniecieUTCData2"
+        app:layout_constraintStart_toStartOf="@+id/lookup_UTC_display"
         app:layout_constraintTop_toBottomOf="@+id/godzinaLabel2" />
 
     <TextView
@@ -178,8 +178,8 @@
         android:text="Przesunięcie UTC"
         android:textColor="#FBFBFB"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/strefaCzasowaData2"
-        app:layout_constraintTop_toBottomOf="@+id/strefaCzasowaData2" />
+        app:layout_constraintStart_toStartOf="@+id/lookup_timezone_display"
+        app:layout_constraintTop_toBottomOf="@+id/lookup_timezone_display" />
 
     <TextView
         android:id="@+id/GodzinaLabel"
@@ -202,8 +202,8 @@
         android:text="Godzina"
         android:textColor="#FBFBFB"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/przesuniecieUTCData2"
-        app:layout_constraintTop_toBottomOf="@+id/przesuniecieUTCData2" />
+        app:layout_constraintStart_toStartOf="@+id/lookup_UTC_display"
+        app:layout_constraintTop_toBottomOf="@+id/lookup_UTC_display" />
 
     <TextView
         android:id="@+id/PodajMiastoLabel"
@@ -230,10 +230,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SzukajButton" />
+        app:layout_constraintTop_toBottomOf="@+id/address_button" />
 
     <EditText
-        android:id="@+id/CityInput"
+        android:id="@+id/address_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -250,7 +250,7 @@
         app:layout_constraintTop_toBottomOf="@+id/PodajMiastoLabel" />
 
     <Button
-        android:id="@+id/SzukajButton"
+        android:id="@+id/address_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
@@ -259,7 +259,16 @@
         android:text="Szukaj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CityInput" />
+        app:layout_constraintTop_toBottomOf="@+id/address_input" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

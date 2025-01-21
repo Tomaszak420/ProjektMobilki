@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ProjektMobilki</string>
+    <string name="location_text">Twoja lokalizacja będzie tutaj</string>
+    <string name="timezone_label">Strefa czasowa:</string>
+    <string name="utc_label">Przesunięcie UTC:</string>
+    <string name="time_label">Godzina:</string>
+    <string name="address_prompt_label">Podaj adres miasta:</string>
+    <string name="search_button">Szukaj</string>
+    <string name="map_button">Zobacz na mapie</string>
 </resources>
