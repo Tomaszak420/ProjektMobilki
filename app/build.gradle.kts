@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-
+    implementation("org.osmdroid:osmdroid-android:6.1.13")
+    implementation("androidx.preference:preference-ktx:1.2.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
