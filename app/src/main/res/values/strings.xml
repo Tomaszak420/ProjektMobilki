@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ProjektMobilki</string>
+    <string name="location_text">Twoja lokalizacja pojawi się tutaj</string>
+    <string name="timezone_label">Strefa czasowa:</string>
+    <string name="utc_label">Przesunięcie UTC:</string>
+    <string name="time_label">Godzina:</string>
+    <string name="address_prompt_label">Podaj adres:</string>
+    <string name="search_button">Szukaj</string>
+    <string name="map_button">Zobacz lokalizację na mapie</string>
+    <string name="button_search_activity">Wyszukaj inną lokalizację</string>
+    <string name="button_map_activity">Zobacz lokalizację na mapie</string>
+    <string name="coordinates_prompt_label">LUB\nPodaj współrzędne geograficzne:</string>
+    <string name="address_hint">Warsaw</string>
+    <string name="longitude_hint">Długość</string>
+    <string name="latitude_hint">Szerokość</string>
+    <string name="your_timezone_label">Twoja strefa czasowa:</string>
 </resources>
