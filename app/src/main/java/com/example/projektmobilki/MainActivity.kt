@@ -15,12 +15,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
 import kotlin.concurrent.thread
-
+import org.osmdroid.config.Configuration
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var GodzinaData: TextView
 
     private lateinit var GoSearchButton: Button
-    private lateinit var GoMapButton: Button
 
+    private lateinit var mapView: MapView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,10 +47,11 @@ class MainActivity : AppCompatActivity() {
         GodzinaData = findViewById(R.id.GodzinaData)
 
         GoSearchButton = findViewById(R.id.button_search_activity)
-        GoMapButton = findViewById(R.id.button_map_activity)
 
+        mapView = findViewById(R.id.mapView)
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
+        Configuration.getInstance().load(applicationContext, androidx.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext))
+        mapView.setMultiTouchControls(true)
         // Sprawdź uprawnienia i uzyskaj lokalizację
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
@@ -59,9 +64,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        GoMapButton.setOnClickListener {
-            //Do zaimplementowania
-        }
+
+
+
+
     }
 
     private fun getLocation() {
@@ -72,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                 1f
             ) { location ->
                 updateLocationText(location)
+                updateMapLocation(location)
             }
         } catch (e: SecurityException) {
             e.printStackTrace()
@@ -96,7 +103,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateMapLocation(location: Location?) {
+        location?.let {
+            val latitude = it.latitude
+            val longitude = it.longitude
 
+            // Ustawienie mapy na danej lokalizacji
+            val geoPoint = GeoPoint(latitude, longitude)
+            mapView.controller.setZoom(15.0)
+            mapView.controller.setCenter(geoPoint)
+
+            // Dodanie markera
+            val marker = Marker(mapView)
+            marker.position = geoPoint
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            marker.title = "Twoja lokalizacja"
+            mapView.overlays.clear()
+            mapView.overlays.add(marker)
+        }
+    }
     private fun getLocationName(latitude: Double, longitude: Double) {
         try {
             val geocoder = Geocoder(this, Locale.getDefault())

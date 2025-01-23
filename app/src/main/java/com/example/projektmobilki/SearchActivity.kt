@@ -2,6 +2,7 @@ package com.example.projektmobilki
 
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +11,11 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
+import org.osmdroid.config.Configuration
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
+
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
@@ -26,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var latitudeInput : EditText
     private lateinit var addressInput : EditText
     private lateinit var goMapButton : Button
-
+    private lateinit var mapView: MapView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -44,9 +50,10 @@ class SearchActivity : AppCompatActivity() {
         addressInput = findViewById(R.id.address_input)
         longitudeInput = findViewById(R.id.longitude_input)
         latitudeInput = findViewById(R.id.latitude_input)
+        mapView = findViewById(R.id.mapView)
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
+        Configuration.getInstance().load(applicationContext, androidx.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext))
         // Button setup
         searchAddressButton.setOnClickListener {
             val input = addressInput.text.toString()
@@ -67,6 +74,7 @@ class SearchActivity : AppCompatActivity() {
                 val longitude = longitudeInput.text.toString().toDouble()
                 val latitude = latitudeInput.text.toString().toDouble()
                 val locationName = getLocationName(latitude, longitude)
+
                 if (locationName != null) {
                     displayTitleUI(locationName)
                     fetchIPGeolocationData(latitude, longitude)
@@ -82,8 +90,23 @@ class SearchActivity : AppCompatActivity() {
         }
 
         goMapButton.setOnClickListener {
-            // Do zaimplementowania
+            val locationName = locationDisplay.text.toString()
+            if (locationName.isNotEmpty()) {
+                val address = getAddressFromString(locationName)
+                if (address != null) {
+                    val location = Location("").apply {
+                        latitude = address.latitude
+                        longitude = address.longitude
+                    }
+                    updateMapLocation(location)
+                } else {
+                    displayErrorMessageUI("Nie znaleziono lokalizacji: $locationName")
+                }
+            } else {
+                displayErrorMessageUI("Pole lokalizacji jest puste.")
+            }
         }
+
 
     }
 
@@ -154,6 +177,25 @@ class SearchActivity : AppCompatActivity() {
             timezoneDisplay.text = timezone
             utcDisplay.text = utcOffset
             timeDisplay.text = currentTime
+        }
+    }
+    private fun updateMapLocation(location: Location?) {
+        location?.let {
+            val latitude = it.latitude
+            val longitude = it.longitude
+
+            // Ustawienie mapy na danej lokalizacji
+            val geoPoint = GeoPoint(latitude, longitude)
+            mapView.controller.setZoom(15.0)
+            mapView.controller.setCenter(geoPoint)
+
+            // Dodanie markera
+            val marker = Marker(mapView)
+            marker.position = geoPoint
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            marker.title = "Twoja lokalizacja"
+            mapView.overlays.clear()
+            mapView.overlays.add(marker)
         }
     }
 
