@@ -3,7 +3,24 @@
     <style name="Base.Theme.ProjektMobilki" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textColorPrimary">@color/white</item> <!-- Główny tekst -->
+        <item name="android:textColorSecondary">@color/white</item> <!-- Drugoplanowy tekst -->
+        <item name="android:textColorTertiary">@color/white</item> <!-- Trzecioplanowy tekst -->
+
+        <!-- Kolor paska powiadomień (status bar) -->
+        <item name="android:statusBarColor">@color/color_primary</item>
+
+        <!-- Kolor główny (przyciski, pasek narzędzi) -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_secondary</item>
+
+
+        <!-- Kolor tekstu na przyciskach -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+
     </style>
+
+
 
     <style name="Theme.ProjektMobilki" parent="Base.Theme.ProjektMobilki" />
 </resources>
